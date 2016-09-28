@@ -2,13 +2,15 @@
 Simple task system 
 
 # Installing 
-git clone https://github.com/dosarkz/yii2-tasks.git
+1. git clone https://github.com/dosarkz/yii2-tasks.git
+2. composer install
+3. set your mysql config "common/config/main-local.php" and create db
 
-# Migration
-php yii migrate
+## Migration
+4. php yii migrate
 
-# Seeding
-php yii seed
+## Seeding
+5. php yii seed
 
 
 
