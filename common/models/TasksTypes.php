@@ -51,9 +51,9 @@ class TasksTypes extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'position' => 'Position',
-            'is_default' => 'Is Default',
+            'title' => 'Название',
+            'position' => 'Позиция',
+            'is_default' => 'По умолчанию',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

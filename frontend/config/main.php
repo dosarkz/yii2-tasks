@@ -15,6 +15,9 @@ return [
         'tasks' => [
             'class' => 'app\modules\tasks\TaskModule',
         ],
+        'tasks-types' => [
+            'class' => 'app\modules\tasksTypes\TasksTypeModule',
+        ],
     ],
 
     'components' => [

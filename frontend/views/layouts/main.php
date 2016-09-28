@@ -40,13 +40,18 @@ AppAsset::register($this);
                 ['label' => 'Меню', 'items' => [
                     ['label' => 'Список', 'url' => '/tasks'],
                     ['label' => 'Создание', 'url' => '/tasks/default/create'],
-                    ['label' => 'Редактирование', 'url' => 'tasks/default/edit'],
                 ]],
 
             ],
         ],
-        ['label' => 'Типы задач', 'url' => ['/tasks_types'],
+        ['label' => 'Типы задач', 'url' => ['/tasks-types'],
+            'items' => [
+                ['label' => 'Меню', 'items' => [
+                    ['label' => 'Список', 'url' => '/tasks-types'],
+                    ['label' => 'Создание', 'url' => '/tasks-types/default/create'],
+                ]],
 
+            ],
         ],
     ];
     if (Yii::$app->user->isGuest) {
