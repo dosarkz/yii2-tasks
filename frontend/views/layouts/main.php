@@ -35,8 +35,19 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Задачи', 'url' => ['/tasks']],
-        ['label' => 'Типы задач', 'url' => ['/tasks_types']],
+        ['label' => 'Задачи', 'url' => ['/tasks'],
+            'items' => [
+                ['label' => 'Меню', 'items' => [
+                    ['label' => 'Список', 'url' => '/tasks'],
+                    ['label' => 'Создание', 'url' => '/tasks/default/create'],
+                    ['label' => 'Редактирование', 'url' => 'tasks/default/edit'],
+                ]],
+
+            ],
+        ],
+        ['label' => 'Типы задач', 'url' => ['/tasks_types'],
+
+        ],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Зарегистрироваться', 'url' => ['/site/signup']];

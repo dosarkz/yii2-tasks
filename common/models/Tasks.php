@@ -50,10 +50,15 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'tasks_type_id' => 'Tasks Type ID',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'title' => 'Название',
+            'tasks_type_id' => 'Тип',
+            'created_at' => 'Создано',
+            'updated_at' => 'Обновлено',
         ];
+    }
+
+    public function getTasks_type()
+    {
+        return $this->hasOne(TasksTypes::className(), ['id' => 'tasks_type_id']);
     }
 }

@@ -15,20 +15,9 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'title') ?>
-
-    <?= $form->field($model, 'tasks_type_id') ?>
-
-    <?= $form->field($model, 'created_at') ?>
-
-    <?= $form->field($model, 'updated_at') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
-    </div>
+    <?= $form->field($model, 'tasks_type_id')
+        ->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\TasksTypes::find()->all(),'id','title'),
+            ['prompt' => 'Выберите тип', 'class' => 'form-control', 'onchange'=>'this.form.submit()', 'id' => 'task_type_list']) ?>
 
     <?php ActiveForm::end(); ?>
 

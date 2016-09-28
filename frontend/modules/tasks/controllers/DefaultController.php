@@ -6,9 +6,12 @@ use common\models\TasksTypes;
 use Yii;
 use common\models\Tasks;
 use app\models\TasksSearch;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Request;
 
 /**
  * TaskController implements the CRUD actions for Tasks model.
@@ -39,9 +42,13 @@ class DefaultController extends Controller
         $searchModel = new TasksSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $tasks_type = Yii::$app->request->get('tasks_type_id');
+
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'tasks_type'   => $tasks_type
         ]);
     }
 
@@ -65,18 +72,14 @@ class DefaultController extends Controller
     public function actionCreate()
     {
         $model = new Tasks();
-        $tasks_types = TasksTypes::find()->select(['title','id'])->orderBy('position')->all();
+        $tasks_types_list = $this->getListTasksTypes();
+
         $tasks_types_default = TasksTypes::find()->where(['is_default' => true])->one();
         $data = Yii::$app->request->post();
 
         if (!$tasks_types_default)
         {
             throw new NotFoundHttpException('The default type does not exist.');
-        }
-        $task_type_dropdownlist = [];
-
-        foreach ($tasks_types as $type) {
-            $task_type_dropdownlist[$type->id] = $type->title;
         }
 
         if (isset($_POST['Tasks']['tasks_type_id']) && Yii::$app->request->post('tasks_type_id') == '')
@@ -85,11 +88,11 @@ class DefaultController extends Controller
         }
 
         if ($model->load($data) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'tasks_types' => $task_type_dropdownlist
+                'tasks_types_list' => $tasks_types_list
             ]);
         }
     }
@@ -104,15 +107,24 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
 
-        $tasks_types = TasksTypes::find()->select(['title','id'])->orderBy('position')->all();
+        $tasks_types_list = $this->getListTasksTypes();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'tasks_types'   => $tasks_types
+                'tasks_types_list' => $tasks_types_list
             ]);
+        }
+    }
+
+    protected function getListTasksTypes()
+    {
+        if (($model = TasksTypes::find()->select(['title','id'])->orderBy('position')->all()) !== null) {
+            return $model;
+        } else {
+            return [];
         }
     }
 
